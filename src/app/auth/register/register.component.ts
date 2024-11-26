@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit {
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-    });
+    }); 
   }
 
   /**
@@ -52,7 +52,7 @@ export class RegisterComponent implements OnInit {
   * ------------------------------------------------------------------------------------------------------------------------------
   */
   public submitFormGroup(): void{
-    
+    console.log(this.formGroup.value);
   }
   /**
   * ------------------------------------------------------------------------------------------------------------------------------

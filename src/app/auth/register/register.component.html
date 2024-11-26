@@ -16,7 +16,7 @@
                 />
                 <div class="input-group-append">
                   <span class="input-group-text">
-                    <i class="fa fa-check-circle"></i>
+                    <i *ngIf="formGroup.get('name')?.valid" class="fa fa-check-circle"></i>
                   </span>
                 </div>
               </div>
@@ -31,7 +31,7 @@
                 />
                 <div class="input-group-append">
                   <span class="input-group-text">
-                    <i class="fa fa-check-circle"></i>
+                    <i *ngIf="formGroup.get('email')?.valid" class="fa fa-check-circle"></i>
                   </span>
                 </div>
               </div>
@@ -46,7 +46,7 @@
                 />
                 <div class="input-group-append">
                   <span class="input-group-text">
-                    <i class="fa fa-check-circle"></i>
+                    <i *ngIf="formGroup.get('password')?.valid" class="fa fa-check-circle"></i>
                   </span>
                 </div>
               </div>
