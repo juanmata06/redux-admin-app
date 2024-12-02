@@ -1,8 +1,13 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
-import { AuthService } from "../../../services/auth.service";
-import Swal from "sweetalert2";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ReplaySubject, takeUntil } from 'rxjs';
+import { Store } from '@ngrx/store';
+import * as uiState from '../../../shared/ui-state/ui.actions';
+import { AppState } from '../../../app.reducer';
+import { AuthService } from '../../../services/auth.service';
+
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-register',
@@ -15,8 +20,8 @@ export class RegisterComponent implements OnInit {
   * General vars for component
   * ------------------------------------------------------------------------------------------------------------------------------
   */
-
-  loading: boolean = false;
+  private _unsubscribeAll: ReplaySubject<boolean> = new ReplaySubject(1);
+  isLoading: boolean = false;
   formGroup: FormGroup;
 
   /**
@@ -28,17 +33,29 @@ export class RegisterComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private _router: Router,
+    private _store: Store<AppState>,
     private _authService: AuthService,
   ) {
-    this.loading = true;
+    this.isLoading = true;
   }
 
   ngOnInit(): void {
+    this._store.select('ui').pipe(takeUntil(this._unsubscribeAll)).subscribe(response => {
+      this.isLoading = response.isLoading;
+      console.log('loadingggggg');
+
+    });
     this.formGroup = this._formBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
+  }
+
+
+  ngOnDestroy() {
+    this._unsubscribeAll.next(true);
+    this._unsubscribeAll.complete();
   }
 
   /**
@@ -60,18 +77,24 @@ export class RegisterComponent implements OnInit {
   */
 
   public submitFormGroup(): void {
-    Swal.fire({
-      title: "Wait please",
-      didOpen: () => {
-        Swal.showLoading();
-      }
-    });
+    // Swal.fire({
+    //   title: "Wait please",
+    //   didOpen: () => {
+    //     Swal.showLoading();
+    //   }
+    // });
+    // Used for close all pop ups:
+    // Swal.close();
+
 
     if (this.formGroup.invalid) { return; }
+
+    this._store.dispatch(uiState.isLoading());
+
+  
     const { name, email, password } = this.formGroup.value;
     this._authService.createUser(name, email, password).then(
       (response: any) => {
-        Swal.close();
         this._router.navigate(['/']);
       }
     ).catch((err: any) => {
@@ -80,7 +103,7 @@ export class RegisterComponent implements OnInit {
         title: "Oops...",
         text: err.message || "Something went wrong!",
       });
-    })
+    });
   }
 
   /**

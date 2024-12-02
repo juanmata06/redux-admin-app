@@ -1,12 +1,12 @@
-//* Angular modules:
+//* Angular imports:
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-//* My services, guards, configs:
+//* Services, guards, configs imports:
 import { AuthGuard } from './guards/auth.guard';
 import { dashBoardRoutes } from './modules/dashboard/dashboard.routes';
 
-//* My imports:
+//* APP imports:
 import { LoginComponent } from './modules/auth/login/login.component';
 import { RegisterComponent } from './modules/auth/register/register.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';

@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   */
 
   title = 'redux-admin-app';
-  loading: boolean = false;
+  isLoading: boolean;
 
   /**
    * -----------------------------------------------------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
   constructor(
     private _authService: AuthService
   ) {
-    this.loading = true;
+    this.isLoading = true;
     this._authService.initAuthListener();
   }
 
