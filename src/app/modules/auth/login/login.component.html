@@ -40,11 +40,21 @@
             </div>
             <div class="form-group">
               <button 
+                *ngIf="!isLoading"
                 type="submit"
                 class="btn btn-primary submit-btn btn-block"
                 [disabled]="formGroup.invalid"
               >
-                Login
+                {{'Login'}}
+              </button>
+              <button 
+                *ngIf="isLoading"
+                type="button"
+                class="btn btn-primary submit-btn btn-block"
+                disabled
+              >
+                <i class="fa fa-spin fa-sync"></i>
+                {{'Loading'}}
               </button>
             </div>
             
