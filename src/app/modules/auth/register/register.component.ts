@@ -69,23 +69,20 @@ export class RegisterComponent implements OnInit {
 
     if (this.formGroup.invalid) { return; }
     const { name, email, password } = this.formGroup.value;
-    this._authService.createUser(name, email, password)
-      .then(
-        (response: any) => {
-          console.log(response);
-          Swal.close();
-          this._router.navigate(['/']);
-        }
-      )
-      .catch((err: any) => {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: err.message || "Something went wrong!",
-        });
-      })
+    this._authService.createUser(name, email, password).then(
+      (response: any) => {
+        Swal.close();
+        this._router.navigate(['/']);
+      }
+    ).catch((err: any) => {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: err.message || "Something went wrong!",
+      });
+    })
   }
-  
+
   /**
   * ------------------------------------------------------------------------------------------------------------------------------
   * PUBLIC VALIDATION AND INTERNAL PROCESS METHODS

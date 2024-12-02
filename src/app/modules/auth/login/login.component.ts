@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   * General vars for component
   * ------------------------------------------------------------------------------------------------------------------------------
   */
- 
+
   loading: boolean = false;
   formGroup: FormGroup;
 
@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   /**
   * ------------------------------------------------------------------------------------------------------------------------------
@@ -59,21 +59,18 @@ export class LoginComponent implements OnInit {
   public submitFormGroup(): void {
     if (this.formGroup.invalid) { return; }
 
-    const { email, password } = this.formGroup.value;    
-    this._authService.logIn(email, password)
-      .then(
-        (response: any) => {
-          console.log(response);
-          this._router.navigate(['/']);
-        }
-      )
-      .catch((err: any) => {        
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: err.message || "Something went wrong!",
-        });
-      })
+    const { email, password } = this.formGroup.value;
+    this._authService.logIn(email, password).then(
+      (response: any) => {
+        this._router.navigate(['/']);
+      }
+    ).catch((err: any) => {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: err.message || "Something went wrong!",
+      });
+    })
   }
 
   /**
