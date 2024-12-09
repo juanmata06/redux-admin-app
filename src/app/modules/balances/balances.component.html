@@ -7,22 +7,26 @@
             Especifique el monto y el tipo
           </p>
 
-          <form>
+          <form [formGroup]="formGroup" (ngSubmit)="submitFormGroup()">
             
             <div class="form-group">
               <label>Descripción</label>
-              <input type="text" 
-                     class="form-control" 
-                     placeholder="Descripción"
-                     name="descripcion">
+              <input 
+                type="text" 
+                class="form-control" 
+                placeholder="Descripción"
+                formControlName="description"
+              />
             </div>
 
             <div class="form-group">
                 <label>Monto</label>
-                <input type="number" 
-                       class="form-control" 
-                       placeholder="Monto"
-                       name="monto">
+                <input 
+                  type="number" 
+                  class="form-control" 
+                  placeholder="Monto"
+                  formControlName="amount"
+                />
                   <p>
                     Debe de ser un monto positivo
                   </p>
@@ -31,14 +35,41 @@
             <div class="form-group">
                 <label>Tipo</label>
                 <br>
-                <button type="button" class="btn btn-primary btn-block">Ingreso</button>
-                <!-- <button type="button" class="btn btn-warning btn-block">Egreso</button> -->
+                <button 
+                  type="button" 
+                  *ngIf="balanceType == 'income'"
+                  (click)="balanceType = 'expense'"
+                  class="btn btn-primary btn-block"
+                >
+                  {{'Ingreso'}}
+                </button>
+                <button 
+                  type="button" 
+                  *ngIf="balanceType == 'expense'"
+                  (click)="balanceType = 'income'"
+                  class="btn btn-warning btn-block"
+                >
+                  {{'Egreso'}}
+                </button>
             </div>
 
             <hr>
-            <button type="button" class="btn btn-success mr-2">
+            <button type="submit" 
+              *ngIf="!isLoading"
+              class="btn btn-success mr-2" 
+              [disabled]="formGroup.invalid"
+            >
               <i class="fa fa-save"></i>
               Agregar
+            </button>
+
+            <button type="submit" 
+              *ngIf="isLoading"
+              class="btn btn-success mr-2" 
+              disabled
+            >
+              <i class="fa fa-spin fa-sync"></i>
+              Loading
             </button>
 
             <!-- 

@@ -41,8 +41,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this._store.select('ui').pipe(takeUntil(this._unsubscribeAll)).subscribe(response => {
       this.isLoading = response.isLoading;
-      console.log('loadingggggg');
-
     });
     this.formGroup = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email]],

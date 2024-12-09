@@ -16,6 +16,7 @@ import { iUser } from '../interfaces/user.interface';
 export class AuthService {
 
   fireStoreUserSubscription: Subscription;
+  private _user: iUser | null;
 
   constructor(
     private _router: Router,
@@ -23,6 +24,10 @@ export class AuthService {
     private _angularFirestore: AngularFirestore,
     private _store: Store
   ) { }
+
+  public get user() {
+    return this._user;
+  }
 
   /**
    * Listens to the user's authentication state, and updates the store with the authenticated user's information 
@@ -35,9 +40,11 @@ export class AuthService {
       if (user) {
         this.fireStoreUserSubscription = this._angularFirestore.doc(`${user.uid}/user`).valueChanges()
           .subscribe((response: any) => {
+            this._user = response;
             this._store.dispatch(authActions.setCurrentUser({ currentUser: response }));
           });
       } else {
+        this._user = null;
         this.fireStoreUserSubscription.unsubscribe();
         this._store.dispatch(authActions.unsetCurrentUser());
       }
