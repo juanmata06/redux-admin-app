@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ReplaySubject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
-import * as uiState from '../../../shared/ui-state/ui.actions';
+import * as uiState from '../../../shared/state-management/ui-state/ui.actions';
 import { AppState } from '../../../app.reducer';
 import { AuthService } from '../../../services/auth.service';
 

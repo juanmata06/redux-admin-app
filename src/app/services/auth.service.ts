@@ -7,7 +7,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable, Subscription, map } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import * as authActions from '../modules/auth/auth-state/auth.actions';
+import * as authActions from '../shared/state-management/auth-state/auth.actions';
 import { iUser } from '../interfaces/user.interface';
 
 @Injectable({

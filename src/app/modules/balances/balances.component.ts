@@ -7,11 +7,11 @@ import { Store } from '@ngrx/store';
 import { iBalance } from '../../interfaces/balance.interface';
 
 import { AppState } from '../../app.reducer';
-import * as actions from '../../shared/ui-state/ui.actions';
+import * as actions from '../../shared/state-management/ui-state/ui.actions';
 
 import Swal from 'sweetalert2';
 
-import { InvoicesService } from '../../services/invoices.service';
+import { BalancesService } from '../../services/balances.service';
 
 @Component({
   selector: 'app-balances',
@@ -39,7 +39,7 @@ export class BalancesComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private _store: Store<AppState>,
-    private _invoicesService: InvoicesService
+    private _balancesService: BalancesService
   ) { }
 
   ngOnInit(): void {
@@ -81,7 +81,7 @@ export class BalancesComponent implements OnInit {
     this._store.dispatch(actions.isLoading());
     const balance: iBalance = { ...this.formGroup.value, type: this.balanceType }
 
-    this._invoicesService.createBalance(balance)
+    this._balancesService.createBalance(balance)
       .then(() => {
         this.formGroup.reset();
         this._store.dispatch(actions.stopLoading());

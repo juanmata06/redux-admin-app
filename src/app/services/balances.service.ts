@@ -13,7 +13,7 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class InvoicesService {
+export class BalancesService {
 
   constructor(
     private _router: Router,
@@ -22,6 +22,14 @@ export class InvoicesService {
     private _store: Store,
     private _authService: AuthService
   ) { }
+
+  public initBalancesListener(uid: string): void {
+    this._angularFirestore.collection(`${uid}/balances/items`).valueChanges().
+    subscribe(response => {
+      console.log(response);
+      
+    })
+  }
 
   public createBalance(balance: iBalance) {
     const uid = this._authService.user?.uid;
