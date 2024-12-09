@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 //* Services, guards, configs imports:
-import { AuthGuard } from './guards/auth.guard';
+import { AuthGuard } from './shared/guards/auth.guard';
 import { dashBoardRoutes } from './modules/dashboard/dashboard.routes';
 
 //* APP imports:

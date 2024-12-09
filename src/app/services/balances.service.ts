@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { iBalance } from '../interfaces/balance.interface';
 
 import { AuthService } from './auth.service';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -23,12 +24,15 @@ export class BalancesService {
     private _authService: AuthService
   ) { }
 
-  public initBalancesListener(uid: string): void {
-    this._angularFirestore.collection(`${uid}/balances/items`).valueChanges().
-    subscribe(response => {
-      console.log(response);
-      
-    })
+  //Here we use snapshotChanges to get attributes from the doc like id
+  public initBalancesListener(uid: string) {
+    return this._angularFirestore.collection(`${uid}/balances/items`)
+      .snapshotChanges().pipe(
+        map(snapshotValue => snapshotValue.map(doc => ({
+          uid: doc.payload.doc.id,
+          ...doc.payload.doc.data() as any
+        })))
+      );
   }
 
   public createBalance(balance: iBalance) {
@@ -36,5 +40,10 @@ export class BalancesService {
     return this._angularFirestore.doc(`${uid}/balances`)
       .collection('items')
       .add({ ...balance });
+  }
+
+  public deleteBalanceByUid(balanceUid: string) {
+    const uid = this._authService.user?.uid;
+    return this._angularFirestore.doc(`${uid}/balances/items/${balanceUid}`).delete();
   }
 }

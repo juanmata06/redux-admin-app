@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../app.reducer';
 
 import { BalancesService } from '../../services/balances.service';
+import * as actions from '../../shared/state-management/balances-state/balances.actions';
 
 @Component({
   selector: 'app-dashboard',
@@ -33,16 +34,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this._store.select('auth')
-      .pipe(
-        filter(auth => auth.currentUser != null),
+    this._store.select('auth').pipe(
+      filter(auth => auth.currentUser != null),
+      takeUntil(this._unsubscribeAll)
+    ).subscribe(({ currentUser }) => {
+      this._balancesService.initBalancesListener(currentUser?.uid!).pipe(
         takeUntil(this._unsubscribeAll)
-      ).subscribe(({ currentUser }) => {
-        // this.isLoading = response.isLoading;
-        console.log(currentUser);
-        this._balancesService.initBalancesListener(currentUser?.uid!);
-
+      ).subscribe(response => {
+        this._store.dispatch(actions.setItems({ items: response }));
       });
+    });
   }
 
   ngOnDestroy() {

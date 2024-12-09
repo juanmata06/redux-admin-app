@@ -5,4 +5,4 @@ export const setItems = createAction('[Balances] Set Items',
   props<{ items: iBalance[] }>()
 );
 
-export const unItems = createAction('[Balances] Unset Items',);
+export const unsetItems = createAction('[Balances] Unset Items',);

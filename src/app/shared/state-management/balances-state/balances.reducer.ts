@@ -12,7 +12,7 @@ export const initialState: State = {
 
 const _balancesReducer = createReducer(initialState,
   on(actions.setItems, (state, { items }) => ({ ...state, items: [...items] })),
-  on(actions.unItems, state => ({ ...state, items: [] }))
+  on(actions.unsetItems, state => ({ ...state, items: [] }))
 );
 
 export function balancesReducer(state: any, action: any) {

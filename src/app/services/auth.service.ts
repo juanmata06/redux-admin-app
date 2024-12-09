@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { iUser } from '../interfaces/user.interface';
+
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
@@ -8,7 +10,7 @@ import { Observable, Subscription, map } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as authActions from '../shared/state-management/auth-state/auth.actions';
-import { iUser } from '../interfaces/user.interface';
+import * as balancesActions from '../shared/state-management/balances-state/balances.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +49,8 @@ export class AuthService {
         this._user = null;
         this.fireStoreUserSubscription.unsubscribe();
         this._store.dispatch(authActions.unsetCurrentUser());
+        this._store.dispatch(balancesActions.unsetItems());
+
       }
     });
   }
