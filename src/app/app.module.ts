@@ -33,7 +33,7 @@ import { LoginComponent } from './modules/auth/login/login.component';
 import { RegisterComponent } from './modules/auth/register/register.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { BalancesComponent } from './modules/balances/balances.component';
-import { StatisticComponent } from './modules/balances/statistic/statistic.component';
+import { StatisticsComponent } from './modules/balances/statistics/statistics.component';
 import { DetailComponent } from './modules/balances/detail/detail.component';
 import { BalancesOrderPipe } from './shared/pipes/balances-order.pipe';
 
@@ -44,7 +44,7 @@ import { BalancesOrderPipe } from './shared/pipes/balances-order.pipe';
     RegisterComponent,
     DashboardComponent,
     BalancesComponent,
-    StatisticComponent,
+    StatisticsComponent,
     DetailComponent,
     FooterComponent,
     NavbarComponent,
