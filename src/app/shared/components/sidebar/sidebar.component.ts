@@ -1,16 +1,21 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ReplaySubject, filter, takeUntil } from 'rxjs';
-import { iUser } from '../../interfaces/user.interface';
 import { Router } from '@angular/router';
+
+import { ReplaySubject, filter, takeUntil } from 'rxjs';
+
 import { Store } from '@ngrx/store';
-import { AppState } from '../../app.reducer';
+import { AppState } from '../../../app.reducer';
+
+import { iUser } from '../../../interfaces/user.interface';
+
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss'
+  selector: 'app-sidebar',
+  templateUrl: './sidebar.component.html',
+  styleUrl: './sidebar.component.scss'
 })
-export class NavbarComponent implements OnInit, OnDestroy {
+export class SidebarComponent implements OnInit, OnDestroy {
   /**
   * ------------------------------------------------------------------------------------------------------------------------------
   * General vars for component
@@ -29,6 +34,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(
     private _router: Router,
     private _store: Store<AppState>,
+    private _authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -62,6 +68,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
   * PUBLIC METHODS
   * ------------------------------------------------------------------------------------------------------------------------------
   */
+
+  public logOut(): void {
+    this._authService.logOut().then(() => {
+      this._router.navigate(['/login']);
+    });
+  }
 
   /**
   * ------------------------------------------------------------------------------------------------------------------------------
