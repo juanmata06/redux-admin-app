@@ -80,9 +80,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     const { email, password } = this.formGroup.value;
     this._authService.logIn(email, password).then(
       (response: any) => {
+        this._store.dispatch(uiState.stopLoading());
         this._router.navigate(['/']);
       }
     ).catch((err: any) => {
+      this._store.dispatch(uiState.stopLoading());
       Swal.fire({
         icon: "error",
         title: "Oops...",

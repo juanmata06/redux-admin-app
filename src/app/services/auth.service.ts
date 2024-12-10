@@ -47,10 +47,9 @@ export class AuthService {
           });
       } else {
         this._user = null;
-        this.fireStoreUserSubscription.unsubscribe();
+        this.fireStoreUserSubscription?.unsubscribe();
         this._store.dispatch(authActions.unsetCurrentUser());
         this._store.dispatch(balancesActions.unsetItems());
-
       }
     });
   }
