@@ -1,17 +1,21 @@
 <nav class="sidebar sidebar-offcanvas">
   <ul class="nav">
-    <li class="nav-item nav-profile">
+    <li class="nav-item nav-profile" *ngIf="currentUserData">
       <div class="nav-link">
         
         <div class="user-wrapper">
           <div class="profile-image">
-            <img src="assets/images/faces/face1.jpg" alt="profile image">
+            <img src="assets/images/faces-clipart/pic-1.png" alt="profile image">
           </div>
           
           <div class="text-wrapper">
-            <p class="profile-name">Cristobal Colón</p>
+            <p class="profile-name">
+              {{currentUserData.name || currentUserData.email || 'Sin nombre de usuario'}}
+            </p>
             <div>
-              <small class="designation text-muted">Gerente</small>
+              <small class="designation text-muted">
+                {{currentUserData.email}}
+              </small>
             </div>
           </div>
         </div>

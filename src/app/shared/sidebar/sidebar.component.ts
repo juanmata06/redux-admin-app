@@ -1,5 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { ReplaySubject, filter, takeUntil } from 'rxjs';
+
+import { Store } from '@ngrx/store';
+import { AppState } from '../../app.reducer';
+
+import { iUser } from '../../interfaces/user.interface';
+
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -7,12 +15,15 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy {
   /**
   * ------------------------------------------------------------------------------------------------------------------------------
   * General vars for component
   * ------------------------------------------------------------------------------------------------------------------------------
   */
+
+  private _unsubscribeAll: ReplaySubject<boolean> = new ReplaySubject(1);
+  currentUserData: iUser;
 
   /**
    * -----------------------------------------------------------------------------------------------------------------------------
@@ -22,10 +33,23 @@ export class SidebarComponent implements OnInit {
 
   constructor(
     private _router: Router,
+    private _store: Store<AppState>,
     private _authService: AuthService,
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this._store.select('auth').pipe(
+      filter(auth => auth.currentUser != null),
+      takeUntil(this._unsubscribeAll)
+    ).subscribe(({ currentUser }) => {
+      this.currentUserData = currentUser!;
+    });
+  }
+
+  ngOnDestroy() {
+    this._unsubscribeAll.next(true);
+    this._unsubscribeAll.complete();
+  }
 
   /**
   * ------------------------------------------------------------------------------------------------------------------------------
@@ -45,8 +69,8 @@ export class SidebarComponent implements OnInit {
   * ------------------------------------------------------------------------------------------------------------------------------
   */
 
-  public logOut(): void {    
-    this._authService.logOut().then(()=>{
+  public logOut(): void {
+    this._authService.logOut().then(() => {
       this._router.navigate(['/login']);
     });
   }
