@@ -29,19 +29,17 @@ import { AppComponent } from './app.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
-import { LoginComponent } from './modules/auth/login/login.component';
-import { RegisterComponent } from './modules/auth/register/register.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { BalancesComponent } from './modules/balances/balances.component';
 import { StatisticsComponent } from './modules/balances/statistics/statistics.component';
 import { DetailComponent } from './modules/balances/detail/detail.component';
 import { BalancesOrderPipe } from './shared/pipes/balances-order.pipe';
 
+import { AuthModule } from './modules/auth/auth.module';
+
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    RegisterComponent,
     DashboardComponent,
     BalancesComponent,
     StatisticsComponent,
@@ -62,7 +60,8 @@ import { BalancesOrderPipe } from './shared/pipes/balances-order.pipe';
       maxAge: 25, // Retains 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AuthModule
   ],
   providers: [
     provideFirebaseApp(() => initializeApp({ "projectId": "redux-admin-app-6c55e", "appId": "1:305624092676:web:0d8d96375f3656a8242551", "storageBucket": "redux-admin-app-6c55e.firebasestorage.app", "apiKey": "AIzaSyAZTdkvoJPtrB_ZW8BV--B7RtCCFmWeCJY", "authDomain": "redux-admin-app-6c55e.firebaseapp.com", "messagingSenderId": "305624092676", "measurementId": "G-5S5PFMW9Y7" })),
