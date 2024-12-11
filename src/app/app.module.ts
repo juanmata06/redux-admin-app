@@ -26,9 +26,6 @@ registerLocaleData(localeEs, 'es-ES', localeEsExtra);
 //* APP:
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
-import { FooterComponent } from './shared/components/footer/footer.component';
-import { NavbarComponent } from './shared/components/navbar/navbar.component';
-import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { BalancesComponent } from './modules/balances/balances.component';
 import { StatisticsComponent } from './modules/balances/statistics/statistics.component';
@@ -37,6 +34,8 @@ import { BalancesOrderPipe } from './shared/pipes/balances-order.pipe';
 
 import { AuthModule } from './modules/auth/auth.module';
 
+import { SharedModule } from './shared/shared.module';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,9 +43,6 @@ import { AuthModule } from './modules/auth/auth.module';
     BalancesComponent,
     StatisticsComponent,
     DetailComponent,
-    FooterComponent,
-    NavbarComponent,
-    SidebarComponent,
     BalancesOrderPipe
   ],
   imports: [
@@ -61,6 +57,7 @@ import { AuthModule } from './modules/auth/auth.module';
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
     ReactiveFormsModule,
+    SharedModule,
     AuthModule
   ],
   providers: [
